@@ -14,25 +14,19 @@ bot = Bot(PAGE_ACCESS_TOKEN)
 @app.route('/', methods=['GET'])
 def verify():
 	# Webhook verification
-    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-        if not request.args.get("hub.verify_token") == "hello":
-            return "Verification token mismatch", 403
-        return request.args["hub.challenge"], 200
-    return "Hello world", 200
+	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
+		if not request.args.get("hub.verify_token") == "hello":
+			return "Verification token mismatch", 403
+		return request.args["hub.challenge"], 200
+	return "Hello world", 200
 
 
 @app.route('/', methods=['POST'])
 def webhook():
-
 	data = request.get_json()
 	log(data)
 
-
-    messaging_text = ""
-    sender_id = ""
-    recipient_id = ""
-
-    if data['object'] == 'page':
+	if data['object'] == 'page':
 		for entry in data['entry']:
 			for messaging_event in entry['messaging']:
 
@@ -46,13 +40,14 @@ def webhook():
 						messaging_text = messaging_event['message']['text']
 					else:
 						messaging_text = 'no text'
-    
-    if messaging_text == "picture":
-        response = "Taking picture..."
-        bot.send_text_message(sender_id, response)
-    else:
-	    response = messaging_text
-	    bot.send_text_message(sender_id, response)
+
+
+					response = messaging_text
+					# Echo
+					if messaging_text == "Picture" or messaging_text == "picture":
+						response = "Taking picture..."
+
+					bot.send_text_message(sender_id, response)
 
 	return "ok", 200
 
