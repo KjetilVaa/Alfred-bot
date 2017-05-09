@@ -23,10 +23,16 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
+
 	data = request.get_json()
 	log(data)
 
-	if data['object'] == 'page':
+
+    messaging_text = ""
+    sender_id = ""
+    recipient_id = ""
+
+    if data['object'] == 'page':
 		for entry in data['entry']:
 			for messaging_event in entry['messaging']:
 
@@ -40,10 +46,13 @@ def webhook():
 						messaging_text = messaging_event['message']['text']
 					else:
 						messaging_text = 'no text'
-
-					# Echo
-					response = messaging_text
-					bot.send_text_message(sender_id, response)
+    
+    if messaging_text == "picture":
+        response = "Taking picture..."
+        bot.send_text_message(sender_id, response)
+    else:
+	    response = messaging_text
+	    bot.send_text_message(sender_id, response)
 
 	return "ok", 200
 
