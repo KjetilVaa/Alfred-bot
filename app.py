@@ -24,7 +24,7 @@ def verify():
 	return "Nonnegata", 200
 
 
-@app.route("/bilde.png", methods=["GET"])
+@app.route("/bilde2.png", methods=["GET"])
 	#Getting image
 def sendImage():
 	a = takePicture()
@@ -59,7 +59,7 @@ def webhook():
 						bot.send_message(sender_id, "Taking picture...")
 						print("sending picture")
 						#bot.send_image_url(sender_id, imageurl)
-						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
+						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde2.png", sender_id)
 
 					#bot.send_text_message(sender_id, response)
 
