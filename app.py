@@ -37,9 +37,9 @@ def verify():
     return "Nonnegata", 200
 
 
-@app.route("/bilde.png", methods=["GET"])
+@app.route("/bilde.png/<int:id>", methods=["GET"])
     #Getting image
-def sendImage():
+def sendImage(id):
     a = takePicture()
     return send_file(a, mimetype="image/png"), 200
 
