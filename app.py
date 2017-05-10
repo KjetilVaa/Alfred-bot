@@ -1,6 +1,7 @@
 import os, sys
 from captureWebCamPicture import takePicture
 from flask import Flask, request, send_file
+import requests
 from pymessenger import Bot
 
 
@@ -56,7 +57,8 @@ def webhook():
 						response = "Taking picture..."
 						image = takePicture()
 						print("sending picture")
-						bot.send_image_url(sender_id, imageurl)
+						#bot.send_image_url(sender_id, imageurl)
+						sendPictureJson(imageurl, sender_id)
 
 					bot.send_text_message(sender_id, response)
 
@@ -66,6 +68,30 @@ def webhook():
 def log(message):
 	print(message)
 	sys.stdout.flush()
+
+def sendPictureJson(url, senderid):
+	json_data = {
+		"recipient": {"id": senderid},
+		"message": {
+			"text": "Taking picture...",
+			"attachment": {
+				"type": "image",
+				"payload": {
+					"url" : url
+				}
+			}
+		}
+	}
+
+	params = {
+		"access_token": PAGE_ACCESS_TOKEN
+	}
+
+	r = requests.post("https://graph.facebook.com/v2.6/me/messages", json_data, params)
+	print(r, r.status_code, r.text)
+
+
+
 
 
 if __name__ == "__main__":
