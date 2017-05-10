@@ -27,7 +27,8 @@ def verify():
 @app.route("/bilde.png", methods=["GET"])
 	#Getting image
 def sendImage():
-	return send_file("bilde.png", mimetype="image/png"), 200
+	a = takePicture()
+	return send_file(a, mimetype="image/png"), 200
 
 
 
@@ -56,11 +57,9 @@ def webhook():
 					# Echo
 					if messaging_text == "Picture" or messaging_text == "picture":
 						bot.send_message(sender_id, "Taking picture...")
-						takePicture()
 						print("sending picture")
 						#bot.send_image_url(sender_id, imageurl)
-						t = Timer(10.0, sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id))
-						t.start()
+						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
 
 					#bot.send_text_message(sender_id, response)
 
