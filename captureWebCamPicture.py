@@ -6,7 +6,7 @@ pygame.init()
 pygame.camera.init()
 
 def takePicture():
-    cam = pygame.camera.Camera("/dev/video0", (352, 288))
+    cam = pygame.camera.Camera("/dev/video0", (150, 150))
     cam.start()
     image = cam.get_image()
     pygame.image.save(image, "bilde.png")

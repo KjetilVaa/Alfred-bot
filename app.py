@@ -74,14 +74,9 @@ def sendPictureJson(url, senderid):
 		"recipient": {"id": senderid},
 		"message": {
 			"attachment": {
-				"type": "template",
+				"type": "image",
 				"payload": {
-					"template_type" : "generic",
-					"elements": {
-						"title": "Nonnegata-stue",
-						"image_url": url,
-						"subtitle": "Jørgens bule"
-					}
+					"url": url,
 				}
 			}
 		}
