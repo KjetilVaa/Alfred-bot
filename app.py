@@ -13,6 +13,18 @@ PAGE_ACCESS_TOKEN = "EAADyBpRsToMBAA38IirkkrfZCyk7CD9C7eN6GWdTK0yCg7n19k2XewzM9u
 bot = Bot(PAGE_ACCESS_TOKEN)
 imageurl = "https://5d8f1f5d.eu.ngrok.io/bilde.png"
 
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -24,7 +36,7 @@ def verify():
 	return "Nonnegata", 200
 
 
-@app.route("/bilde2.png", methods=["GET"])
+@app.route("/bilde.png", methods=["GET"])
 	#Getting image
 def sendImage():
 	a = takePicture()
@@ -59,7 +71,7 @@ def webhook():
 						bot.send_message(sender_id, "Taking picture...")
 						print("sending picture")
 						#bot.send_image_url(sender_id, imageurl)
-						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde2.png", sender_id)
+						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
 
 					#bot.send_text_message(sender_id, response)
 
