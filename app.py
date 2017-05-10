@@ -58,7 +58,7 @@ def webhook():
 						image = takePicture()
 						print("sending picture")
 						#bot.send_image_url(sender_id, imageurl)
-						sendPictureJson(imageurl, sender_id)
+						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
 
 					bot.send_text_message(sender_id, response)
 
@@ -73,7 +73,6 @@ def sendPictureJson(url, senderid):
 	json_data = {
 		"recipient": {"id": senderid},
 		"message": {
-			"text": "Taking picture...",
 			"attachment": {
 				"type": "image",
 				"payload": {
