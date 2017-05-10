@@ -1,6 +1,7 @@
 import os, sys
 from captureWebCamPicture import takePicture
 from flask import Flask, request, send_file
+from threading import Timer
 import requests
 from pymessenger import Bot
 
@@ -54,13 +55,14 @@ def webhook():
 					response = messaging_text
 					# Echo
 					if messaging_text == "Picture" or messaging_text == "picture":
-						response = "Taking picture..."
+						bot.send_message("Taking picture...")
 						takePicture()
 						print("sending picture")
 						#bot.send_image_url(sender_id, imageurl)
-						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
+						t = Timer(10.0, sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id))
+						t.start()
 
-					bot.send_text_message(sender_id, response)
+					#bot.send_text_message(sender_id, response)
 
 	return "ok", 200
 

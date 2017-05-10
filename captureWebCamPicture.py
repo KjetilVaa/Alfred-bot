@@ -11,5 +11,4 @@ def takePicture():
     image = cam.get_image()
     pygame.image.save(image, "bilde.png")
     cam.stop()
-    return "bilde.png"
 
