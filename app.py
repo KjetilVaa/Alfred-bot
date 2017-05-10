@@ -55,7 +55,7 @@ def webhook():
 					# Echo
 					if messaging_text == "Picture" or messaging_text == "picture":
 						response = "Taking picture..."
-						image = takePicture()
+						takePicture()
 						print("sending picture")
 						#bot.send_image_url(sender_id, imageurl)
 						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
