@@ -1,6 +1,6 @@
 import os, sys
-
-from flask import Flask, request, send_from_directory
+from captureWebCamPicture import takePicture
+from flask import Flask, request, send_file
 from pymessenger import Bot
 
 
@@ -9,22 +9,23 @@ app = Flask(__name__)
 PAGE_ACCESS_TOKEN = "EAADyBpRsToMBAA38IirkkrfZCyk7CD9C7eN6GWdTK0yCg7n19k2XewzM9uAuTNvDlzZBl5CaCQfZCByUYctDzNVz81bDQmCNZA9cfNAHh88mkeaeMUQZCljwnuYdZAEsPxNBx37xImpdUYZA5FTUYEkNzwbZBg67JtzZC6AypPiMY7QZDZD"
 
 bot = Bot(PAGE_ACCESS_TOKEN)
+imageurl = "https://5d8f1f5d.eu.ngrok.io/bilde.png"
 
 
 @app.route('/', methods=['GET'])
 def verify():
 	# Webhook verification
 	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-		if not request.args.get("hub.verify_token") == "hello":
+		if not request.args.get("hub.verify_token") == "alfred_success":
 			return "Verification token mismatch", 403
 		return request.args["hub.challenge"], 200
 	return "Nonnegata", 200
 
 
-@app.route("/get_image", methods=["GET"])
+@app.route("/bilde.png", methods=["GET"])
 	#Getting image
 def sendImage():
-	return send_from_directory("png", "bilde.png")
+	return send_file("bilde.png", mimetype="image/png"), 200
 
 
 
@@ -53,6 +54,9 @@ def webhook():
 					# Echo
 					if messaging_text == "Picture" or messaging_text == "picture":
 						response = "Taking picture..."
+						image = takePicture()
+						print("sending picture")
+						bot.send_image_url(sender_id, imageurl)
 
 					bot.send_text_message(sender_id, response)
 
