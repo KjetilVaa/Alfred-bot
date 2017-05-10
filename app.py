@@ -1,6 +1,6 @@
 import os, sys
 
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from pymessenger import Bot
 
 
@@ -18,7 +18,14 @@ def verify():
 		if not request.args.get("hub.verify_token") == "hello":
 			return "Verification token mismatch", 403
 		return request.args["hub.challenge"], 200
-	return "Hello world", 200
+	return "Nonnegata", 200
+
+
+@app.route("/get_image", methods=["GET"])
+	#Getting image
+def sendImage():
+	return send_from_directory("png", "bilde.png")
+
 
 
 @app.route('/', methods=['POST'])
