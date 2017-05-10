@@ -3,6 +3,7 @@ from captureWebCamPicture import takePicture
 from flask import Flask, request, send_file
 from threading import Timer
 import requests
+import random
 from pymessenger import Bot
 
 
@@ -72,7 +73,8 @@ def webhook():
                         bot.send_message(sender_id, "Taking picture...")
                         print("sending picture")
                         #bot.send_image_url(sender_id, imageurl)
-                        sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
+						randomNumber = random.randint(0, 1000)
+                        sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png/" + str(a), sender_id)
 
                     #bot.send_text_message(sender_id, response)
 
