@@ -72,8 +72,8 @@ def webhook():
                     if messaging_text == "Picture" or messaging_text == "picture":
                         bot.send_message(sender_id, "Taking picture...")
                         print("sending picture")
+                        a = random.randint(0, 1000)
                         #bot.send_image_url(sender_id, imageurl)
-						randomNumber = random.randint(0, 1000)
                         sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png/" + str(a), sender_id)
 
                     #bot.send_text_message(sender_id, response)
