@@ -19,6 +19,7 @@ def add_header(r):
     Add headers to both force latest IE rendering engine or Chrome Frame,
     and also to cache the rendered page for 10 minutes.
     """
+    r.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
@@ -28,89 +29,89 @@ def add_header(r):
 
 @app.route('/', methods=['GET'])
 def verify():
-	# Webhook verification
-	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-		if not request.args.get("hub.verify_token") == "alfred_success":
-			return "Verification token mismatch", 403
-		return request.args["hub.challenge"], 200
-	return "Nonnegata", 200
+    # Webhook verification
+    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
+        if not request.args.get("hub.verify_token") == "alfred_success":
+            return "Verification token mismatch", 403
+        return request.args["hub.challenge"], 200
+    return "Nonnegata", 200
 
 
 @app.route("/bilde.png", methods=["GET"])
-	#Getting image
+    #Getting image
 def sendImage():
-	a = takePicture()
-	return send_file(a, mimetype="image/png"), 200
+    a = takePicture()
+    return send_file(a, mimetype="image/png"), 200
 
 
 
 @app.route('/', methods=['POST'])
 def webhook():
-	data = request.get_json()
-	log(data)
+    data = request.get_json()
+    log(data)
 
-	if data['object'] == 'page':
-		for entry in data['entry']:
-			for messaging_event in entry['messaging']:
+    if data['object'] == 'page':
+        for entry in data['entry']:
+            for messaging_event in entry['messaging']:
 
-				# IDs
-				sender_id = messaging_event['sender']['id']
-				recipient_id = messaging_event['recipient']['id']
+                # IDs
+                sender_id = messaging_event['sender']['id']
+                recipient_id = messaging_event['recipient']['id']
 
-				if messaging_event.get('message'):
-					# Extracting text message
-					if 'text' in messaging_event['message']:
-						messaging_text = messaging_event['message']['text']
-					else:
-						messaging_text = 'no text'
+                if messaging_event.get('message'):
+                    # Extracting text message
+                    if 'text' in messaging_event['message']:
+                        messaging_text = messaging_event['message']['text']
+                    else:
+                        messaging_text = 'no text'
 
 
-					response = messaging_text
-					# Echo
-					if messaging_text == "Picture" or messaging_text == "picture":
-						bot.send_message(sender_id, "Taking picture...")
-						print("sending picture")
-						#bot.send_image_url(sender_id, imageurl)
-						sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
+                    response = messaging_text
+                    # Echo
+                    if messaging_text == "Picture" or messaging_text == "picture":
+                        bot.send_message(sender_id, "Taking picture...")
+                        print("sending picture")
+                        #bot.send_image_url(sender_id, imageurl)
+                        sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png", sender_id)
 
-					#bot.send_text_message(sender_id, response)
+                    #bot.send_text_message(sender_id, response)
 
-	return "ok", 200
+    return "ok", 200
 
 
 def log(message):
-	print(message)
-	sys.stdout.flush()
+    print(message)
+    sys.stdout.flush()
 
 def sendPictureJson(url, senderid):
-	json_data = {
-		"recipient": {"id": senderid},
-		"message": {
-			"attachment": {
-				"type": "template",
-				"payload": {
-					"template_type" : "generic",
-					"elements": [{
-						"title":"Nonnegata stue",
-						"image_url": url
-					}]
-				}
-			}
-		}
-	}
+    json_data = {
+        "recipient": {"id": senderid},
+        "message": {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type" : "generic",
+                    "elements": [{
+                        "title":"Nonnegata stue",
+                        "image_url": url
+                    }]
+                }
+            }
+        }
+    }
 
-	params = {
-		"access_token": PAGE_ACCESS_TOKEN
-	}
+    params = {
+        "access_token": PAGE_ACCESS_TOKEN
+    }
 
-	r = requests.post("https://graph.facebook.com/v2.6/me/messages",json=json_data, params=params)
-	print(r, r.status_code, r.text)
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages",json=json_data, params=params)
+    print(r, r.status_code, r.text)
 
 
 
 
 
 if __name__ == "__main__":
-	app.run(debug = True, port = 80)
+    app.run(debug = True, port = 80)
 
 
