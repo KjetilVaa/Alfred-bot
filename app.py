@@ -87,7 +87,9 @@ def sendPictureJson(url, senderid):
 		"access_token": PAGE_ACCESS_TOKEN
 	}
 
-	r = requests.post("https://graph.facebook.com/v2.6/me/messages", json_data, params)
+	r = requests.post(
+	"https://graph.facebook.com/v2.6/me/messages?access_token=EAADyBpRsToMBAA38IirkkrfZCyk7CD9C7eN6GWdTK0yCg7n19k2XewzM9uAuTNvDlzZBl5CaCQfZCByUYctDzNVz81bDQmCNZA9cfNAHh88mkeaeMUQZCljwnuYdZAEsPxNBx37xImpdUYZA5FTUYEkNzwbZBg67JtzZC6AypPiMY7QZDZD"
+		,json_data, params)
 	print(r, r.status_code, r.text)
 
 
