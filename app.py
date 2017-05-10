@@ -78,6 +78,7 @@ def sendPictureJson(url, senderid):
 				"payload": {
 					"template_type" : "generic",
 					"elements": {
+						"title": "Nonnegata-stue",
 						"image_url": url
 					}
 				}
