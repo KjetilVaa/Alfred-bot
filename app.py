@@ -77,11 +77,10 @@ def sendPictureJson(url, senderid):
 				"type": "template",
 				"payload": {
 					"template_type" : "generic",
-					"elements": {
-						"title": "Nonnegata-stue",
-						"image_url": url,
-						"subtitle": "Jørgens bule"
-					}
+					"elements": [{
+						"title":"Nonnegata stue",
+						"image_url": url
+					}]
 				}
 			}
 		}
