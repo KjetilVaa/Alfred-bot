@@ -76,10 +76,10 @@ def webhook():
                         #bot.send_image_url(sender_id, imageurl)
                         sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png/" + str(a), sender_id)
                     #bot.send_text_message(sender_id, response)
-		    if messaging_text[:4] == "Say" or messaging_text[:4] == "say":
-		        text = messaging_text[4:]
-			say(text)
-			bot.send_text_message(sender_id, "Saying: " + text)
+                    if messaging_text[:4] == "Say" or messaging_text[:4] == "say":
+                        text = messaging_text[4:]
+                        say(text)
+                        bot.send_text_message(sender_id, "Saying: " + text)
 
     return "ok", 200
 
