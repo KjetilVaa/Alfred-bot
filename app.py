@@ -65,6 +65,9 @@ def webhook():
                         messaging_text = 'no text'
 
                     print(messaging_text)
+                    print(messaging_text[:4])
+                    print(messaging_text[4:])
+
                     # Echo
                     if messaging_text == "Picture" or messaging_text == "picture":
                         bot.send_message(sender_id, "Taking picture...")
