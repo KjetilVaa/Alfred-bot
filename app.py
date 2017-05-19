@@ -75,12 +75,14 @@ def webhook():
                         a = random.randint(0, 1000)
                         # bot.send_image_url(sender_id, imageurl)
                         sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png/" + str(a), sender_id)
-                    # bot.send_text_message(sender_id, response)
-                    if messaging_text[:4] == "Say" or messaging_text[:4] == "say":
+                        # bot.send_text_message(sender_id, response)
+                    elif messaging_text[:4] == "Say" or messaging_text[:4] == "say":
                         print("speak")
                         text = messaging_text[4:]
                         say(text)
                         bot.send_text_message(sender_id, "Saying: " + text)
+                    else:
+                        bot.send_text_message(sender_id, "No command found, sir.")
 
     return "ok", 200
 
