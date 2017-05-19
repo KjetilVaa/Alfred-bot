@@ -76,7 +76,7 @@ def webhook():
                         # bot.send_image_url(sender_id, imageurl)
                         sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png/" + str(a), sender_id)
                         # bot.send_text_message(sender_id, response)
-                    elif messaging_text[:4] == "Say" or messaging_text[:4] == "say":
+                    elif "Say" in messaging_text or "say" in messaging_text:
                         print("speak")
                         text = messaging_text[4:]
                         say(text)
