@@ -1,7 +1,6 @@
 import os, sys
 from captureWebCamPicture import takePicture
 from flask import Flask, request, send_file
-from threading import Timer
 import requests
 import random
 from pymessenger import Bot
