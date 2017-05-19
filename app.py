@@ -7,13 +7,13 @@ import random
 from pymessenger import Bot
 from textToSpeech import say
 
-
 app = Flask(__name__)
 
 PAGE_ACCESS_TOKEN = "EAADyBpRsToMBAA38IirkkrfZCyk7CD9C7eN6GWdTK0yCg7n19k2XewzM9uAuTNvDlzZBl5CaCQfZCByUYctDzNVz81bDQmCNZA9cfNAHh88mkeaeMUQZCljwnuYdZAEsPxNBx37xImpdUYZA5FTUYEkNzwbZBg67JtzZC6AypPiMY7QZDZD"
 
 bot = Bot(PAGE_ACCESS_TOKEN)
 imageurl = "https://5d8f1f5d.eu.ngrok.io/bilde.png"
+
 
 @app.after_request
 def add_header(r):
@@ -40,11 +40,10 @@ def verify():
 
 
 @app.route("/bilde.png/<int:id>", methods=["GET"])
-    #Getting image
+# Getting image
 def sendImage(id):
     a = takePicture()
     return send_file(a, mimetype="image/png"), 200
-
 
 
 @app.route('/', methods=['POST'])
@@ -66,17 +65,17 @@ def webhook():
                     else:
                         messaging_text = 'no text'
 
-
-                    response = messaging_text
+                    print(messaging_text)
                     # Echo
                     if messaging_text == "Picture" or messaging_text == "picture":
                         bot.send_message(sender_id, "Taking picture...")
                         print("sending picture")
                         a = random.randint(0, 1000)
-                        #bot.send_image_url(sender_id, imageurl)
+                        # bot.send_image_url(sender_id, imageurl)
                         sendPictureJson("https://5d8f1f5d.eu.ngrok.io/bilde.png/" + str(a), sender_id)
-                    #bot.send_text_message(sender_id, response)
+                    # bot.send_text_message(sender_id, response)
                     if messaging_text[:4] == "Say" or messaging_text[:4] == "say":
+                        print("speak")
                         text = messaging_text[4:]
                         say(text)
                         bot.send_text_message(sender_id, "Saying: " + text)
@@ -88,6 +87,7 @@ def log(message):
     print(message)
     sys.stdout.flush()
 
+
 def sendPictureJson(url, senderid):
     json_data = {
         "recipient": {"id": senderid},
@@ -95,9 +95,9 @@ def sendPictureJson(url, senderid):
             "attachment": {
                 "type": "template",
                 "payload": {
-                    "template_type" : "generic",
+                    "template_type": "generic",
                     "elements": [{
-                        "title":"Nonnegata stue",
+                        "title": "Nonnegata stue",
                         "image_url": url
                     }]
                 }
@@ -109,14 +109,9 @@ def sendPictureJson(url, senderid):
         "access_token": PAGE_ACCESS_TOKEN
     }
 
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages",json=json_data, params=params)
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", json=json_data, params=params)
     print(r, r.status_code, r.text)
 
 
-
-
-
 if __name__ == "__main__":
-    app.run(debug = True, port = 80)
-
-
+    app.run(debug=True, port=80)
