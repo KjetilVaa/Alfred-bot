@@ -1,4 +1,4 @@
-#Alfred bot
+# Alfred bot
 
 The goal of this project was to create a robotic bot in my student dorm room. With using a raspberry pi and a TTS-engine (Text-To-Speach) and STT-engine (Speach-To-Text) that has prelearned text and speech processing, we would manage to communicate with it and make it execute tasks on voice commands. Acting like a personal butler (Hence, Alfred).
 
