@@ -8,4 +8,14 @@ The raspberry was hooked up to an speaker, mic and camera. Enabling different ta
 
 (Deleted all (execpt one) pictures taken by the pi because of obvious reasons)
 
-Also using a virtualenv for the python project. This is in general recommended large projects.
+## Dependencies
+
+virtualenv for the python project. This is in general recommended large projects.
+
+- Express
+- Flask (eg. Express of JS)
+- pymessenger
+- textToSpeech
+- SpeechToText
+
+
